@@ -1,9 +1,11 @@
-import React from "react";
+"use client"
+import React, { useEffect } from "react";
 import { IoMdSearch } from "react-icons/io";
 import { FaCartShopping } from "react-icons/fa6";
 import { FaCaretDown } from "react-icons/fa6";
+import { useDispatch, useSelector } from "react-redux";  // Added useSelector import
 import Link from "next/link";
-import {getCartProducts } from "@/app/redux/actions/cart";
+import { getCartProducts } from "@/app/redux/actions/cart";
 
 const MenuLinks = [
   {
@@ -47,9 +49,17 @@ const DropdownLinks = [
 ];
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const cartData = useSelector((state) => state.cart.data); // Get cart data from Redux
+  const cartLength = cartData.length;  // Get the length of the cart
+
+  useEffect(() => {
+    dispatch(getCartProducts());
+    window.scroll(0, 0);
+  }, [dispatch]);
 
   return (
-    <div className="bg-white  dark:bg-[#000000] dark:text-white duration-200 relative z-40">
+    <div className="bg-white dark:bg-[#000000] dark:text-white duration-200 relative z-40">
       <div className="py-4">
         <div className="container flex justify-between items-cenetr">
           {/* Logo and links section */}
@@ -69,7 +79,6 @@ const Navbar = () => {
                       href={data.link}
                       className="inline-block px-4 font-semibold text-[#fff] hover:text-black dark:hover:text-white duration-200"
                     >
-                      {" "}
                       {data.name}
                     </a>
                   </li>
@@ -89,11 +98,8 @@ const Navbar = () => {
                   {/* Dropdown Links */}
                   <div className="absolute z-[9999] hidden group-hover:block w-[200px] rounded-md bg-white shadow-md dark:bg-gray-900 p-2 text-black dark:text-white">
                     <ul className="space-y-2">
-                      {DropdownLinks.map((data, index) => (
-                        <li key={index}>
-                          {" "}
-                          {/* Add a unique key */}
-                          {/* Render dropdown link content here */}
+                      {DropdownLinks.map((data) => (
+                        <li key={data.id}>
                           {data.name}
                         </li>
                       ))}
@@ -111,9 +117,7 @@ const Navbar = () => {
               <input
                 type="text"
                 placeholder="Search"
-                className="
-                        search-bar p-2 rounded-[10px]
-                        "
+                className="search-bar p-2 rounded-[10px]"
               />
               <IoMdSearch className="text-xl text-gray-600 group-hover:text-primary dark:text-gray-400 absolute top-1/2 -translate-y-1/2 right-3 duration-200" />
             </div>
@@ -122,9 +126,12 @@ const Navbar = () => {
             <Link href="/cart">
               <button className="relative p-3">
                 <FaCartShopping className="text-xl text-gray-600 dark:text-gray-400" />
-                <div className="w-4 h-4 bg-red-500 text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs">
-                  4
-                </div>
+                {/* Display cart items count */}
+                {cartLength > 0 && (
+                  <div className="w-4 h-4 bg-red-500 text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs">
+                    {cartLength}
+                  </div>
+                )}
               </button>
             </Link>
           </div>
