@@ -3,6 +3,7 @@ import { IoMdSearch } from "react-icons/io";
 import { FaCartShopping } from "react-icons/fa6";
 import { FaCaretDown } from "react-icons/fa6";
 import Link from "next/link";
+import {getCartProducts } from "@/app/redux/actions/cart";
 
 const MenuLinks = [
   {
@@ -46,6 +47,7 @@ const DropdownLinks = [
 ];
 
 const Navbar = () => {
+
   return (
     <div className="bg-white  dark:bg-[#000000] dark:text-white duration-200 relative z-40">
       <div className="py-4">

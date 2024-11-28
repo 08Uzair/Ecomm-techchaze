@@ -2,13 +2,13 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import Heading from "../Shared/Heading";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../redux/actions/products";
 import { createCartProducts } from "../../redux/actions/cart";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import Heading from "../Shared/Heading";
+import Link from "next/link";
 
 const Products = () => {
   const router = useRouter();
@@ -40,6 +40,7 @@ const Products = () => {
 
     try {
       dispatch(createCartProducts(newProduct));
+      alert("Added to Cart Successfully");
       toast.success("Added to Cart Successfully");
       console.log("Added product to cart:", newProduct);
     } catch (error) {
@@ -47,36 +48,30 @@ const Products = () => {
     }
   };
 
-  const baseUrl = "http://localhost:1337"; // Backend base URL
-
   return (
     <div>
       <div className="container mx-auto px-4 py-8">
         <Heading title="Our Products" subtitle="Explore Our Products" />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
           {ProductsData?.map((product) => {
-            const imageUrl = product?.image?.[0]?.url
-              ? `${baseUrl}${product.image[0].url.startsWith('/') ? product.image[0].url : `/${product.image[0].url}`}`
-              : null;
-
             return (
               <div
                 className="border rounded-lg shadow-md p-4 flex flex-col items-center"
                 key={product.id}
               >
                 <Link href={`/products/${product.documentId}`}>
-                  {imageUrl ? (
+                  {/* Image component */}
+                  {product.image?.[0]?.url && (
                     <Image
-                      src={imageUrl}
-                      alt={product.name || "Product Image"}
+                      src={product.image[0].url.replace(
+                        /.*?(https:\/\/)/,
+                        "$1"
+                      )} // Correcting malformed URL
+                      alt={product.image[0].alternativeText || "Product Image"}
                       width={200}
                       height={200}
                       className="w-[200px] h-48 object-cover rounded-md mb-4"
                     />
-                  ) : (
-                    <div className="w-full h-48 flex items-center justify-center bg-gray-200 rounded-md mb-4">
-                      <span className="text-gray-500">No Image</span>
-                    </div>
                   )}
 
                   <h3 className="text-lg font-semibold mb-2 line-clamp-2">

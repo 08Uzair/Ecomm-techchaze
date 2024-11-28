@@ -3,6 +3,7 @@ import { getBlogByID } from "@/app/redux/actions/blogs";
 import { useParams } from "next/navigation";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Image from "next/image"; // Import Image component
 
 const BlogPage = () => {
   const { id } = useParams();
@@ -14,27 +15,23 @@ const BlogPage = () => {
     dispatch(getBlogByID(id));
   }, [dispatch, id]);
 
-  // Define the base URL
-  const BASE_URL = "https://localhost:1337"; // Replace with your Strapi server URL
-
-  // Handling images
-  const imageUrl = blog?.image?.formats?.thumbnail?.url // Use the thumbnail format if it exists
-    ? `${BASE_URL}${blog.image.formats.thumbnail.url}`
-    : blog?.image?.url
-    ? `${BASE_URL}${blog.image.url}`
-    : "/placeholder.jpg"; // Fallback placeholder image
-
   if (!blog) {
     return <div>Loading...</div>;
   }
+
+  // Handling image URL
+  const imageUrl =
+    blog?.image?.formats?.thumbnail?.url || blog?.image?.url || "/placeholder.jpg"; // Use default placeholder if no image
 
   return (
     <div className="container mx-auto p-4">
       {/* Blog Image */}
       <div className="w-full h-80 flex justify-center items-center mb-4">
-        <img
-          src={imageUrl}
+        <Image
+          src={imageUrl} // Use image URL directly, Next.js will handle external domains
           alt={blog.image?.alternativeText || "Blog Banner"}
+          width={800} // Set the width for the image
+          height={400} // Set the height for the image
           className="max-w-full max-h-full object-contain rounded-lg"
         />
       </div>

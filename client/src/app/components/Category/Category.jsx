@@ -7,8 +7,6 @@ import { getCategory } from "../../redux/actions/category";
 
 const Category = () => {
   const categoryData = useSelector((state) => state.category.data);
-  // console.log(categoryData);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -18,12 +16,12 @@ const Category = () => {
   return (
     <div className="py-8">
       <div className="container">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 ">
-          {/* First column for each category */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+          {/* Loop through categories */}
           {categoryData?.map((item) => {
             return (
               <div
-                key={item.id} // Add a unique key to avoid React warnings
+                key={item.id} // Unique key for each item
                 className="py-10 pl-5 bg-gradient-to-br from-black/90 to-black/70 text-white rounded-3xl relative h-[320px] flex items-end m-4"
               >
                 <div>
@@ -35,15 +33,15 @@ const Category = () => {
                     </p>
                     <Button
                       text="Browse"
-                      bgColor='bg-[#0a0a0a]'
-                      textColor={"text-white"}
+                      bgColor="bg-[#0a0a0a]"
+                      textColor="text-white"
                     />
                   </div>
                 </div>
                 {/* Image component */}
                 {item.image?.url && (
                   <Image
-                    src={item.image.url} // Use the URL from the API response
+                    src={item.image.url.replace(/.*?(https:\/\/)/, "$1")} // Correcting malformed URL
                     alt={item.image.alternativeText || "Category Image"}
                     width={100}
                     height={100}

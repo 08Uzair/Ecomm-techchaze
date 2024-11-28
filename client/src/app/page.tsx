@@ -3,8 +3,8 @@ import Category from "./components/Category/Category";
 import Services from "./components/Services/Services";
 import Products from "./components/Products/Products";
 import Blogs from "./components/Blogs/Blogs";
-import Image1 from "./assets/Image3.png"
-import Image2 from "./assets/Image4.png"
+import Image1 from "./assets/Image3.png";
+import Image2 from "./assets/Image4.png";
 import Hero from "./components/Hero/Hero";
 const BannerData = {
   discount: "30% OFF",

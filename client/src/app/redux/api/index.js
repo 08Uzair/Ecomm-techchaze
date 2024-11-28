@@ -1,12 +1,12 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:1337/api",
+  baseURL: "https://creative-angel-f30baf4fa5.strapiapp.com/api",
   // https://creative-angel-f30baf4fa5.strapiapp.com/api/
   // http://localhost:1337/api/products
 });
 const token =
-  "315d7fa3d4845678175ece27c9115d9f2bd3b351eb4d109a0f14f41a7a443c877a7c825a03aa04580f066211c638e25e3c96ab5222e56d3ccd6388f660fa53c68f3553a1c4cb1484e57684ce369568f1d2b0aba60740c7d9f5c0d1308e55b33a2b9eaa2c63e2b4bc2079cfa182b7ee3af096075a8a4aafe847f16d9e457261ee";
+  "718246b46c8b8aea3f01bb4c30fb9b7a6cd518337887170e9c44846c469331d4c22d74e7bf825b0b19cf6df86bb1f7043821a997c61c8bdc95fd5b673eb0efa3454d3f16ede760e6a65ff752e8b4ff597e076b2aa66ace64e5037e36e8bb923003ff29e0759db2c97d4ab4ffe01723950b518120bba3f250bdf335d23767e8ca";
 API.interceptors.request.use((req) => {
   req.headers.Authorization = `Bearer ${token}`;
   return req;

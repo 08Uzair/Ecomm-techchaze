@@ -39,8 +39,10 @@ const Services = () => {
       <div className="containe my-14 md:my-20">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-8">
           {ServiceData.map((data) => (
-            // eslint-disable-next-line react/jsx-key
-            <div className=" flex flex-col items-start sm:flex-row m-4 gap-4 bg-[#333] rounded-[15px] px-[2rem] py-[3rem]">
+            <div
+              key={data.id} // Add the unique key prop here
+              className="flex flex-col items-start sm:flex-row m-4 gap-4 bg-[#333] rounded-[15px] px-[2rem] py-[3rem]"
+            >
               {data.icon}
               <div>
                 <h1 className="lg:text-xl font-bold">{data.title}</h1>

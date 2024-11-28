@@ -3,6 +3,8 @@ import { deleteCartProduct, getCartProducts } from "@/app/redux/actions/cart";
 import { allProducts } from "@/app/redux/actions/products";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import Navbar from "../Navbar/Navbar";
+import Footer from "../Footer/Footer";
 
 const Cart = () => {
   const [productData, setProductData] = useState([]); // State to hold product data
@@ -54,7 +56,8 @@ const Cart = () => {
   // Function to remove a product from the cart
   const removeProduct = (id) => {
     dispatch(deleteCartProduct(id));
-    window.location.reload();
+    alert("Remove from Cart Successfully")
+    dispatch(fetchProducts());
   };
 
   // Calculate totals
@@ -76,7 +79,9 @@ const Cart = () => {
   const { totalQuantity, subTotal, gst, total } = calculateTotals();
 
   return (
-    <div className="text-white p-4">
+    <>
+    <Navbar/>
+  <div className="text-white p-4">
       <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Product List */}
         <div className="col-span-2">
@@ -156,6 +161,9 @@ const Cart = () => {
         </div>
       </div>
     </div>
+    <Footer/>
+    </>
+  
   );
 };
 

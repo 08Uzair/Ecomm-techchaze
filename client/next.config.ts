@@ -2,8 +2,11 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["localhost"], // Use only 'localhost'
+    domains: [
+      "creative-angel-f30baf4fa5.strapiapp.com",
+      "creative-angel-f30baf4fa5.media.strapiapp.com",
+    ],
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
